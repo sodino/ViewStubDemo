@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewStub;
+import android.view.ViewStub.OnInflateListener;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
@@ -23,8 +24,16 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				if(v.getId() == R.id.btn){
-					ViewStub viewStub = (ViewStub) findViewById(R.id.viewStub);
+					final ViewStub viewStub = (ViewStub) findViewById(R.id.viewStub);
 					if(viewStub != null){
+						Log.d("ANDROID_LAB", "viewStub.visiable=" + viewStub.getVisibility());
+						viewStub.setOnInflateListener(new OnInflateListener() {
+							
+							@Override
+							public void onInflate(ViewStub stub, View inflated) {
+								Log.d("ANDROID_LAB", "viewStub onInflate done");		
+							}
+						});
 						// inflate()之后，viewStub即被从parent中删除了，被inflate返回的vInflate所取代
 						View vInflate = viewStub.inflate();
 						Log.d("ANDROID_LAB", "vInflate:" + vInflate);
